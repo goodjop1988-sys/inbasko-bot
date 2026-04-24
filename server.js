@@ -7,21 +7,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔴 ВСТАВЬ СВОИ ДАННЫЕ (3 бота)
+// 🔴 ВСТАВЬ СВОИ ДАННЫЕ
 const BOTS = {
   bonus: {
-    token: "TOKEN_1",
-    chat: "CHAT_ID_1"
+    token: "8575979739:AAHgrCe_SJ-b_nlchphLR2UwV4BLK_8JCjo/sendMessage",
+    chat: "953144037"
   },
   service: {
     token: "TOKEN_2",
     chat: "CHAT_ID_2"
   },
-service: {
+  consultation: { // 👈 второй попап (переименовали нормально)
     token: "TOKEN_3",
     chat: "CHAT_ID_3"
   },
-
   training: {
     token: "TOKEN_4",
     chat: "CHAT_ID_4"
@@ -67,6 +66,9 @@ app.post("/send", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("🚀 Сервер запущен: http://localhost:3000");
+// ❗ ВАЖНО ДЛЯ RENDER
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("🚀 Сервер запущен");
 });
