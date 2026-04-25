@@ -7,23 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔴 ВСТАВЬ СВОИ ДАННЫЕ
-const BOTS = {
-  bonus: {
-    token: process.env.BOT_TOKEN,
-    chat: "953144037"
-  },
-  service: {
-    token: "TOKEN_2",
-    chat: "CHAT_ID_2"
-  },
-  consultation: { // 👈 второй попап (переименовали нормально)
-    token: "TOKEN_3",
-    chat: "CHAT_ID_3"
-  },
-  training: {
-    token: "TOKEN_4",
-    chat: "CHAT_ID_4"
+const BOT_TOKEN = process.env.BOT_TOKEN;
+const CHAT_ID = "953144037";
   }
 };
 
@@ -47,16 +32,16 @@ app.post("/send", async (req, res) => {
 Комментарий: ${comment || "нет"}
 `;
 
-    await fetch(`https://api.telegram.org/bot${bot.token}/sendMessage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        chat_id: bot.chat,
-        text: text
-      })
-    });
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    chat_id: CHAT_ID,
+    text: text
+  })
+});
 
     res.json({ status: "ok" });
 
