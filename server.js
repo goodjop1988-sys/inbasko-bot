@@ -10,7 +10,7 @@ app.use(express.json());
 // 🔴 ВСТАВЬ СВОИ ДАННЫЕ
 const BOTS = {
   bonus: {
-    token: "8575979739:AAGekFGEq3pvD410W9lprnhcycqv53oyLxY",
+    token: process.env.BOT_TOKEN,
     chat: "953144037"
   },
   service: {
