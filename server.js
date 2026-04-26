@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const BOT_TOKEN = process.env.BOT_TOKEN;
+const BOT_TOKEN = "8575979739:AAHD06E8SBmJB3D7URRJSSnhk_1yCs-yx14";
 const CHAT_ID = "953144037";
   }
 };
