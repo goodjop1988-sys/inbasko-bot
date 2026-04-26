@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 // 🔴 ТВОИ ДАННЫЕ
-const BOT_TOKEN = "8575979739:AAHD06E8SBmJB3D7URRJSSnhk_1yCs-yx14";
+const BOT_TOKEN = process.env.BOT_TOKEN;
 const CHAT_ID = "953144037";
 
 app.post("/send", async (req, res) => {
