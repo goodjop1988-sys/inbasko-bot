@@ -7,30 +7,55 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔴 ТВОИ ДАННЫЕ
-const BOT_TOKEN = process.env.BOT_TOKEN;
-const CHAT_ID = "953144037";
+// 🔴 БЕРЕМ ИЗ ENV
+const BOTS = {
+  bonus: {
+    token: process.env.BOT_TOKEN_BONUS,
+    chat: process.env.CHAT_ID_BONUS
+  },
+  service: {
+    token: process.env.BOT_TOKEN_SERVICE,
+    chat: process.env.CHAT_ID_SERVICE
+  },
+  training: {
+    token: process.env.BOT_TOKEN_TRAINING,
+    chat: process.env.CHAT_ID_TRAINING
+  }
+};
 
 app.post("/send", async (req, res) => {
   try {
-    const { name, phone, course, comment } = req.body;
+    const { name, phone, course, comment, source } = req.body;
+
+    const bot = BOTS[source];
+
+    // ❗ проверка source
+    if (!bot) {
+      return res.status(400).json({ error: "Неизвестный источник" });
+    }
+
+    // ❗ проверка ENV
+    if (!bot.token || !bot.chat) {
+      return res.status(500).json({ error: "Не настроен ENV" });
+    }
 
     const text = `
-Новая заявка INBASKO:
+🔥 INBASKO
 
+Источник: ${source}
 Имя: ${name}
 Телефон: ${phone}
 Курс: ${course || "не указан"}
 Комментарий: ${comment || "нет"}
 `;
 
-    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    const response = await fetch(`https://api.telegram.org/bot${bot.token}/sendMessage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        chat_id: CHAT_ID,
+        chat_id: bot.chat,
         text: text
       })
     });
@@ -46,7 +71,6 @@ app.post("/send", async (req, res) => {
   }
 });
 
-// порт для Render
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
